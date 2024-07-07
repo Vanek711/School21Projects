@@ -1,0 +1,7 @@
+//
+// Created by maksim on 12.11.23.
+//
+long double s21_fabs(double x) {
+  if (x < 0) x *= -1;
+  return x;
+}
