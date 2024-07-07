@@ -1,0 +1,95 @@
+\00\00\00\00 symbol 0 0		\00 symbol 0 0
+
+
+
+\00\00\00\00 symbol 0 0    \00 symbol 0 0
+ symbol 1 1		
+ symbol 2 2		
+ symbol 3 3		
+ symbol 4 4		
+ symbol 5 5		
+ symbol 6 6		
+ symbol 7 7		
+ symbol 8 8		
+	 symbol 9 9		
+
+ symbol 10 a		
+ symbol 11 b		
+ symbol 12 c		
+
+ symbol 13 d		
+ symbol 14 e		
+ symbol 15 f		
+ symbol 16 10		
+ symbol 17 11		
+ symbol 18 12		
+ symbol 19 13		
+ symbol 20 14		
+ symbol 21 15		
+ symbol 22 16		
+ symbol 23 17		
+ symbol 24 18		
+ symbol 25 19		
+ symbol 26 1a		
+ symbol 27 1b		
+ symbol 28 1c		
+ symbol 29 1d		
+ symbol 30 1e		
+ symbol 31 1f		
+  symbol 32 20		
+! symbol 33 21		
+" symbol 34 22		
+# symbol 35 23		
+$ symbol 36 24		
+% symbol 37 25		
+& symbol 38 26		
+' symbol 39 27		
+ symbol 40 28
+128 symbol Ђ
+129 symbol Ѓ
+130 symbol Џ
+131 symbol ѓ
+132 symbol Њ
+133 symbol Ћ
+134 symbol Ќ
+135 symbol Ѝ
+136 symbol Ў
+137 symbol Џ
+138 symbol А
+139 symbol Б
+140 symbol В
+141 symbol Г
+142 symbol Д
+143 symbol Е
+144 symbol Ж
+145 symbol З
+146 symbol И
+147 symbol Й
+148 symbol К
+149 symbol Л
+150 symbol М
+151 symbol Н
+152 symbol О
+153 symbol П
+154 symbol Р
+155 symbol С
+156 symbol Т
+157 symbol У
+158 symbol Ф
+159 symbol Х
+160 symbol Ц
+161 symbol Ч
+162 symbol Ш
+163 symbol Щ
+164 symbol Ъ
+165 symbol Ы
+166 symbol Ь
+167 symbol Э
+168 symbol Ю
+169 symbol Я
+170 symbol а
+171 symbol б
+172 symbol в
+173 symbol г
+174 symbol д
+175 symbol е

@@ -1,0 +1,348 @@
+#include "../compare.h"
+
+#include "compare.h"
+
+START_TEST(s21_is_less_test_true) {
+  const s21_decimal value1[] = {
+      {{0xa9311cf3, 0x91a7ab04, 0xae684302, 0x00000000}},
+      {{0x00000000, 0x91a7ab04, 0xae684302, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x1e684302, 0x00000000}},
+      {{0x2c4ef95b, 0xd03077e9, 0xddcc262f, 0x000f0000}},
+      {{0xca57e5a4, 0xeda0fc75, 0x4851544d, 0x80010000}},
+      {{0x00000000, 0xfdafff75, 0x4851544d, 0x80010000}},
+      {{0x00000000, 0x00000000, 0x48fff44d, 0x80010000}},
+      {{0x2c1974d8, 0xd3aa288e, 0x16571b3f, 0x80050000}},
+      {{0x84b978c4, 0x84749464, 0xa6f1692e, 0x801c0000}}};
+  const s21_decimal value2[] = {
+      {{0xffffffff, 0x91a7ab04, 0xae684302, 0x00000000}},
+      {{0x00000000, 0xaaa7ab04, 0xae684302, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x7e684302, 0x00000000}},
+      {{0x2c4ef95b, 0xd03077e9, 0xddcc262f, 0x00010000}},
+      {{0x1a5234a4, 0xeda0fc75, 0x4851544d, 0x80010000}},
+      {{0x00000000, 0xeda0fc75, 0x4851544d, 0x80010000}},
+      {{0x00000000, 0x00000000, 0x4851544d, 0x80010000}},
+      {{0x2c1974d8, 0xd3aa288e, 0x16571b3f, 0x800b0000}},
+      {{0x84b978c4, 0x84749464, 0xa6f1692e, 0x001c0000}}};
+  ck_assert_int_eq(s21_is_less(value1[_i], value2[_i]), 1);
+}
+END_TEST
+
+START_TEST(s21_is_less_test_false) {
+  const s21_decimal value1[] = {
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x00000000, 0x801c0000}},
+      {{0xcecca40d, 0xf317d96d, 0x655fc8dd, 0x00000000}},
+      {{0x00000000, 0xf3fff96d, 0x655fc8dd, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x655fc8ff, 0x00000000}},
+      {{0x7f1725ed, 0x16d91c5a, 0x460bacff, 0x00010000}},
+      {{0xa1111111, 0xfcf69550, 0x747a217d, 0x80010000}},
+      {{0xaca4a848, 0xfcf69550, 0x747a217d, 0x80010000}},
+      {{0xd71e78bf, 0x012d6006, 0xf1e467ee, 0x800f0000}},
+      {{0x4bce0c6a, 0x05d9052e, 0x94c30542, 0x001c0000}}};
+  const s21_decimal value2[] = {
+      {{-0x00000000, -0x00000000, -0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0xc8e9840d, 0xf317d96d, 0x655fc8dd, 0x00000000}},
+      {{0x00000000, 0xf317d96d, 0x655fc8dd, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x655fc8dd, 0x00000000}},
+      {{0x7f1725ed, 0x16d91c5a, 0x460bacff, 0x000f0000}},
+      {{0xaca4a848, 0xfcf69550, 0x747a217d, 0x80010000}},
+      {{0xaca4a848, 0xfcf69550, 0x747a217d, 0x80010000}},
+      {{0xd71e78bf, 0x012d6006, 0xf1e467ee, 0x80010000}},
+      {{0x4bce0c6a, 0x05d9052e, 0x94c30542, 0x801c0000}}};
+  ck_assert_int_eq(s21_is_less(value1[_i], value2[_i]), 0);
+}
+END_TEST
+
+START_TEST(s21_is_less_or_equal_test_true) {
+  const s21_decimal value1[] = {
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},   // 0
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},   // 1
+      {{0x87cc5848, 0xedd20ff1, 0x2939b111, 0x00000000}},   // 2
+      {{0x00000000, 0xda06401c, 0x70dedf4e, 0x00000000}},   // 3
+      {{0x00000000, 0x00000000, 0x35a92682, 0x00000000}},   // 4
+      {{0x1711fbf5, 0xa01142ca, 0xb41c19dc, 0x00000000}},   // 5
+      {{0x00000000, 0x8f2098f9, 0x51311e2c, 0x00000000}},   // 6
+      {{0x00000000, 0x00000000, 0xa2d39119, 0x00000000}},   // 7
+      {{0x00000000, 0xc2a61858, 0x4ee0c13b, 0x000f0000}},   // 8
+      {{0x00000000, 0x00000000, 0xe08ef13a, 0x80010000}},   // 9
+      {{0x00000000, 0xe38182fb, 0xf3a182fb, 0x80010000}},   // 10
+      {{0xd4a953c5, 0xf82ff2d4, 0x92281aeb, 0x800c0000}},   // 11
+      {{0x7b5d4191, 0xca462ecf, 0x2a0d3190, 0x001c0000}}};  // 12
+  const s21_decimal value2[] = {
+      {{-0x00000000, -0x00000000, -0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0x87cc5848, 0xedd20ff1, 0x2939b111, 0x00000000}},
+      {{0x00000000, 0xda06401c, 0x70dedf4e, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x35a92682, 0x00000000}},
+      {{0xe72cfbf5, 0xa0ee42ca, 0xb4dbc9dc, 0x00000000}},
+      {{0x00000000, 0x8f2098f9, 0x53031e2c, 0x00000000}},
+      {{0x00000000, 0x00000000, 0xa2d39339, 0x00000000}},
+      {{0x00000000, 0xc2a61858, 0x4ee0c13b, 0x00050000}},
+      {{0x00000000, 0x00000000, 0xe08ef13a, 0x00010000}},
+      {{0x00000000, 0xe38182fb, 0xf39d01ba, 0x80010000}},  // 10
+      {{0xd4a953c5, 0xf82ff2d4, 0x92281aeb, 0x800f0000}},  // 11
+      {{0x7b5d4191, 0xca462ecf, 0x2a0d3190, 0x00110000}}};
+  ck_assert_int_eq(s21_is_less_or_equal(value1[_i], value2[_i]), 1);
+}
+END_TEST
+
+START_TEST(s21_is_less_or_equal_test_false) {  // greater
+  const s21_decimal value1[] = {
+      {{0x0018fcdb, 0x4778805b, 0x9a2946d8, 0x00000000}},  // new
+      {{0x0018fcdb, 0x4778805b, 0x9a2946d8, 0x00000000}},  // new
+      {{0x4318fcdb, 0x4778805b, 0x9a2946d8, 0x00000000}},
+      {{0x00000000, 0x8ae132dc, 0x8ab662c9, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x848b4f30, 0x00000000}},  // 2
+      {{0x87263d2e, 0x11995f3d, 0xc8bc6b9f, 0x00010000}},
+      {{0x37520bab, 0x018b454b, 0x70bc2967, 0x80040000}},  // 4
+      {{0x00000000, 0x018b454b, 0x70bc1117, 0x80010000}},
+      {{0x00000000, 0x00000000, 0x70bc2967, 0x80010000}},
+      {{0xbdb2694c, 0x36b92e98, 0x03b9dc67, 0x80040000}},  // 7
+      {{0x4ba9b5ac, 0x000261fe, 0x00000000, 0x001c0000}}};
+  const s21_decimal value2[] = {
+      {{0x0018fcdb, 0x4778805b, 0x9a2946d8, 0x80000000}},  // new
+      {{0xfff8fcdb, 0x477f8f5b, 0x9a2946d8, 0x80000000}},  // new
+      {{0x0018fcdb, 0x4778805b, 0x9a2946d8, 0x00000000}},
+      {{0x00000000, 0x0ae132dc, 0x8ab662c9, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x811b4f30, 0x00000000}},  // 2
+      {{0x87263d2e, 0x11995f3d, 0xc8bc6b9f, 0x000f0000}},
+      {{0x37520bab, 0x018b123b, 0x70bc2967, 0x80020000}},  // 4
+      {{0x00000000, 0x018b454b, 0x70bc1237, 0x80010000}},
+      {{0x00000000, 0x00000000, 0x80bc1167, 0x80010000}},
+      {{0xbdb2694c, 0x36b92e98, 0x03b9dc67, 0x80030000}},  // 7
+      {{0x4ba9b5ac, 0x000261fe, 0x00000000, 0x801c0000}}};
+  ck_assert_int_eq(s21_is_less_or_equal(value1[_i], value2[_i]), 0);
+}
+END_TEST
+
+START_TEST(s21_is_greater_test_true) {
+  const s21_decimal value1[] = {
+      {{0x8d141cf4, 0x0e7233f0, 0x8307355c, 0x00000000}},
+      {{0xd491c41b, 0x85916b1f, 0x89251639, 0x00000000}},
+      {{0x62491374, 0x8e6fad52, 0x5dfe2ccd, 0x00000000}},
+      {{0xfc3497a0, 0x9ee7e67f, 0x4a54573d, 0x00010000}},
+      {{0x1ff590be, 0x5dcfbd5f, 0x37f93e0c, 0x80010000}},
+      {{0xb9cdeafd, 0xba112acf, 0x2e1ad99b, 0x800f0000}},  // 5
+      {{0x50ccc5c3, 0x7943750c, 0x5b811dd0, 0x001c0000}}};
+  const s21_decimal value2[] = {
+      {{0x8d000cf4, 0x0e7233f0, 0x8307355c, 0x00000000}},
+      {{0xd491c41b, 0x85916b1f, 0x89250000, 0x00000000}},
+      {{0x62491374, 0x8e6f0000, 0x5dfe2ccd, 0x00000000}},
+      {{0xfc3497a0, 0x9ee7e67f, 0x4a54573d, 0x000f0000}},
+      {{0xf33590be, 0x5dcfbd5f, 0x37f93e0c, 0x80010000}},
+      {{0xb9cdeafd, 0xba112acf, 0x2e1ad99b, 0x80010000}},  // 5
+      {{0x50ccc5c3, 0x7943750c, 0x5b811dd0, 0x801c0000}}};
+  ck_assert_int_eq(s21_is_greater(value1[_i], value2[_i]), 1);
+}
+END_TEST
+
+START_TEST(s21_is_greater_test_false) {  // <=
+  const s21_decimal value1[] = {
+      {{-0x00000000, -0x00000000, -0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0x9436e550, 0xebbfdd22, 0x92ccb530, 0x00000000}},
+      {{0x00000000, 0x00000100, 0x00000000, 0x00000000}},
+      {{0x12345678, 0x00000000, 0x00000000, 0x000f0000}},  // 4
+      {{0x00000000, 0x00000000, 0x00043000, 0x80010000}},
+      {{0x00000000, 0x9be4cf70, 0x00000000, 0x80010000}},
+      {{0xc507484c, 0x00000000, 0x00000000, 0x801c0000}}};
+  const s21_decimal value2[] = {
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0x9436e550, 0xebbfdd22, 0x92ccb530, 0x00000000}},
+      {{0x00000000, 0x00001000, 0x00000000, 0x00000000}},
+      {{0x12345679, 0x00000000, 0x00000000, 0x000f0000}},  // 4
+      {{0x00000000, 0x00000000, 0x00040000, 0x80010000}},  // 5
+      {{0x00000000, 0x9be4cf70, 0x00000000, 0x800f0000}},  // 6
+      {{0xc507484c, 0x00000000, 0x00000000, 0x001c0000}}};
+  ck_assert_int_eq(s21_is_greater(value1[_i], value2[_i]), 0);
+}
+END_TEST
+
+START_TEST(s21_is_greater_or_equal_test_true) {
+  const s21_decimal value1[] = {
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x14056ee3, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x14056ee3, 0x00000000}},  // new
+      {{0x00000000, 0x00000000, 0x00056ee3, 0x00000000}},  // new
+      {{0x00000000, 0x00000000, 0x44056ee3, 0x00000000}},
+      {{0x00000000, 0x0b6d3a02, 0x00000000, 0x00010000}},
+      {{0x0d75d0c3, 0x00000000, 0x00000000, 0x80010000}},
+      {{0x00000000, 0x00000000, 0x6231ac2c, 0x800f0000}},
+      {{0x5c2acf73, 0x00000000, 0x00000000, 0x001c0000}}};
+  const s21_decimal value2[] = {
+      {{-0x00000000, -0x00000000, -0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x14056ee3, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x14056ee3, 0x80000000}},  // new
+      {{0x00000001, 0x00000000, 0x14056ee3, 0x80000000}},  // new
+      {{0x00000000, 0x00000000, 0x14056ee3, 0x00000000}},
+      {{0x00000000, 0x0b6d3a02, 0x00000000, 0x000f0000}},
+      {{0x8d75d0c3, 0x00000000, 0x00000000, 0x80010000}},
+      {{0x00000000, 0x00000000, 0x6231ac2c, 0x80010000}},
+      {{0x5c2acf73, 0x00000000, 0x00000000, 0x801c0000}}};
+  ck_assert_int_eq(s21_is_greater_or_equal(value1[_i], value2[_i]), 1);
+}
+END_TEST
+
+START_TEST(s21_is_greater_or_equal_test_false) {  // <
+  const s21_decimal value1[] = {
+      {{0x00000000, 0x00000000, 0x14056ee3, 0x80000000}},  // new
+      {{0x00000000, 0x00000000, 0x14056ee3, 0x00000000}},  // new
+      {{0x71111443, 0x3802b84e, 0x7ecb1725, 0x00000000}},
+      {{0xbd5fff4c, 0xfb5e5d29, 0x1730a143, 0x000f0000}},
+      {{0xd6f0ff9e, 0x830aff8b, 0x897cff1a, 0x80010000}},
+      {{0x00000000, 0xc87811bb, 0x00000000, 0x80010000}},
+      {{0x00000000, 0x00000000, 0x61046520, 0x801c0000}}};
+  const s21_decimal value2[] = {
+      {{0x00000000, 0x00000000, 0x14056ee3, 0x00000000}},  // new
+      {{0x00000001, 0x00000000, 0x14056ee3, 0x00000000}},  // new
+      {{0x75a7a443, 0x3802b84e, 0x7ecb1725, 0x00000000}},
+      {{0xbd5fff4c, 0xfb5e5d29, 0x1730a143, 0x00010000}},
+      {{0xd6f0319e, 0x830a498b, 0x897c751a, 0x80010000}},
+      {{0x00000000, 0xc87811bb, 0x00000000, 0x800f0000}},
+      {{0x00000000, 0x00000000, 0x61046520, 0x001c0000}}};
+  ck_assert_int_eq(s21_is_greater_or_equal(value1[_i], value2[_i]), 0);
+}
+END_TEST
+
+START_TEST(s21_is_equal_test_true) {
+  const s21_decimal value1[] = {
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0xa4c58849, 0xcf7e4e4c, 0x951a0660, 0x00000000}},
+      {{0x825cadd3, 0x09c65217, 0x0942ef27, 0x00010000}},
+      {{0xf011d63d, 0xcf319c5d, 0x5a617521, 0x00070000}},
+      {{0x5fd7d75d, 0x87b9bb48, 0x51f3b0eb, 0x80010000}},
+      {{0xa35289cb, 0xde085986, 0xc19b0da1, 0x800f0000}},
+      {{0x57514fdb, 0x9789bf5e, 0x53fce04b, 0x801c0000}}};
+  const s21_decimal value2[] = {
+      {{-0x00000000, -0x00000000, -0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0xa4c58849, 0xcf7e4e4c, 0x951a0660, 0x00000000}},
+      {{0x825cadd3, 0x09c65217, 0x0942ef27, 0x00010000}},
+      {{0xf011d63d, 0xcf319c5d, 0x5a617521, 0x00070000}},
+      {{0x5fd7d75d, 0x87b9bb48, 0x51f3b0eb, 0x80010000}},
+      {{0xa35289cb, 0xde085986, 0xc19b0da1, 0x800f0000}},
+      {{0x57514fdb, 0x9789bf5e, 0x53fce04b, 0x801c0000}}};
+  ck_assert_int_eq(s21_is_equal(value1[_i], value2[_i]), 1);
+}
+END_TEST
+
+START_TEST(s21_is_equal_test_false) {
+  const s21_decimal value1[] = {
+      {{0x84d87821, 0xa581ce41, 0x745e8488, 0x00000000}},
+      {{0xa4c58849, 0xcf7e4e4c, 0x951a0660, 0x00000000}},
+      {{0x57514fdb, 0x9789bf5e, 0x53fce04b, 0x801c0000}},
+      {{0xac5d311c, 0x46559676, 0x732a9eb9, 0x80010000}},
+      {{0xb5fe5b85, 0x49a1d81e, 0xe2450263, 0x80010000}},
+      {{0x30271c3e, 0xa4b9e29a, 0x1c7a7a0b, 0x801c0000}}};
+  const s21_decimal value2[] = {
+      {{0xa78768c0, 0xa546fb72, 0x8a3bd361, 0x00000000}},
+      {{0x00000000, 0xcf7e4e4c, 0x951a0660, 0x00000000}},
+      {{0xa35289cb, 0xde085986, 0xc19b0da1, 0x800f0000}},
+      {{0xac5d311c, 0x46597566, 0x732a9eb9, 0x80010000}},
+      {{0xb5fe5b85, 0x49a1d81e, 0xe2450263, 0x800f0000}},
+      {{0x30271c3e, 0xa4b9e29a, 0x1c7a7a0b, 0x001c0000}}};
+  ck_assert_int_eq(s21_is_equal(value1[_i], value2[_i]), 0);
+}
+END_TEST
+
+START_TEST(s21_is_not_equal_test_true) {
+  const s21_decimal value1[] = {
+      {{0x3b749c05, 0xb7d40319, 0x4fd71891, 0x00000000}},
+      {{0x060035d1, 0xe4deb403, 0x6c12a588, 0x000f0000}},
+      {{0x00000000, 0xfbd631a8, 0xea9baf8e, 0x80010000}},  // 2
+      {{0x00000000, 0x00000000, 0xf29ff8c3, 0x80010000}},
+      {{0xed287091, 0xbc2a1ee5, 0x3011243c, 0x801c0000}}};
+  const s21_decimal value2[] = {
+      {{0xb20e5c55, 0x3f013ef3, 0x616fbf5e, 0x00000000}},
+      {{0x060035d1, 0xe4deb403, 0x6c12a588, 0x00010000}},
+      {{0x00000000, 0xfbd631a8, 0xeacbaf8e, 0x80010000}},  // 2
+      {{0x00000000, 0x00000000, 0xf29ff8c3, 0x800f0000}},
+      {{0xed287091, 0xbc2a1ee5, 0x3011243c, 0x001c0000}}};
+  ck_assert_int_eq(s21_is_not_equal(value1[_i], value2[_i]), 1);
+}
+END_TEST
+
+START_TEST(s21_is_not_equal_test_false) {
+  const s21_decimal value1[] = {
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0xca03c327, 0x0436bcdc, 0x4e5e63ab, 0x00000000}},
+      {{0x00000000, 0x05c5a37f, 0xf12e4d9a, 0x00010000}},
+      {{0x00000000, 0x00000000, 0x64ff7fe7, 0x80010000}},
+      {{0x5e5652c5, 0x1ffb833f, 0x815954f8, 0x800f0000}},
+      {{0x88336c90, 0x88336c90, 0x88336c90, 0x801c0000}}};
+  const s21_decimal value2[] = {
+      {{-0x00000000, -0x00000000, -0x00000000, 0x00000000}},
+      {{0x00000000, 0x00000000, 0x00000000, 0x00000000}},
+      {{0xca03c327, 0x0436bcdc, 0x4e5e63ab, 0x00000000}},
+      {{0x00000000, 0x05c5a37f, 0xf12e4d9a, 0x00010000}},
+      {{0x00000000, 0x00000000, 0x64ff7fe7, 0x80010000}},
+      {{0x5e5652c5, 0x1ffb833f, 0x815954f8, 0x800f0000}},
+      {{0x88336c90, 0x88336c90, 0x88336c90, 0x801c0000}}};
+  ck_assert_int_eq(s21_is_not_equal(value1[_i], value2[_i]), 0);
+}
+END_TEST
+
+static void suite_add_s21_is_less(Suite *s) {
+  TCase *tc;
+  tc = tcase_create("s21_is_less");
+  tcase_add_loop_test(tc, s21_is_less_test_true, 0, 8);
+  tcase_add_loop_test(tc, s21_is_less_test_false, 0, 10);
+  suite_add_tcase(s, tc);
+}
+
+static void suite_add_s21_is_less_or_equal(Suite *s) {
+  TCase *tc;
+  tc = tcase_create("s21_is_less_or_equal");
+  tcase_add_loop_test(tc, s21_is_less_or_equal_test_true, 0, 12);
+  tcase_add_loop_test(tc, s21_is_less_or_equal_test_false, 0, 10);
+  suite_add_tcase(s, tc);
+}
+
+static void suite_add_s21_is_greater(Suite *s) {
+  TCase *tc;
+  tc = tcase_create("s21_is_greater");
+  tcase_add_loop_test(tc, s21_is_greater_test_true, 0, 6);
+  tcase_add_loop_test(tc, s21_is_greater_test_false, 0, 7);
+  suite_add_tcase(s, tc);
+}
+
+static void suite_add_s21_is_greater_or_equal(Suite *s) {
+  TCase *tc;
+  tc = tcase_create("s21_is_greater_or_equal");
+  tcase_add_loop_test(tc, s21_is_greater_or_equal_test_true, 0, 9);
+  tcase_add_loop_test(tc, s21_is_greater_or_equal_test_false, 0, 6);
+  suite_add_tcase(s, tc);
+}
+
+static void suite_add_s21_is_equal(Suite *s) {
+  TCase *tc;
+  tc = tcase_create("s21_is_equal");
+  tcase_add_loop_test(tc, s21_is_equal_test_true, 0, 7);
+  tcase_add_loop_test(tc, s21_is_equal_test_false, 0, 5);
+  suite_add_tcase(s, tc);
+}
+
+static void suite_add_s21_is_not_equal(Suite *s) {
+  TCase *tc;
+  tc = tcase_create("s21_is_not_equal");
+  tcase_add_loop_test(tc, s21_is_not_equal_test_true, 0, 4);
+  tcase_add_loop_test(tc, s21_is_not_equal_test_false, 0, 6);
+  suite_add_tcase(s, tc);
+}
+
+void suite_add_compare(Suite *s) {
+  suite_add_s21_is_less(s);
+  suite_add_s21_is_less_or_equal(s);
+  suite_add_s21_is_greater(s);
+  suite_add_s21_is_greater_or_equal(s);
+  suite_add_s21_is_equal(s);
+  suite_add_s21_is_not_equal(s);
+}
